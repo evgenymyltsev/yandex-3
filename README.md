@@ -3,8 +3,8 @@
 ## Files
 
 ```
-src/index.ts     write programm code into this file (or import other files here)
-test/index.ts    write tests or import tests here
+src/Index.ts     write programm code into this file (or import other files here)
+test/Index.ts    write tests or import tests here
 ```
 
 ## Commands
