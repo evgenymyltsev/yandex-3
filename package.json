@@ -4,8 +4,8 @@
   "description": "Реализовать алгоритм работы умного дома",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
-    "pretest": "tsc --target es5 --outDir ./.tmp test/index.ts",
+    "build": "tsc --target es6",
+    "pretest": "tsc --target es6 --outDir ./.tmp test/index.ts",
     "test": "jasmine ./.tmp/test/index.js",
     "start": "npm run build && node dist/index.js"
   },
