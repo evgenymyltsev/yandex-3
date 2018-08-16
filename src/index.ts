@@ -7,7 +7,7 @@ import * as consts from './Constants';
 import {ScheduleIterator_BruteForce} from './ScheduleIterator_BruteForce';
 import {RatesAligner} from './RatesAligner';
 
-function solution(input: it.Input): Output {
+function computeAllSchedules(input: it.Input): DeviceSchedule[][] {
     let ratesAligner = new RatesAligner(Object.assign([], input.rates));
 
     const allSchedules: DeviceSchedule[][] = [];
@@ -50,6 +50,10 @@ function solution(input: it.Input): Output {
         allSchedules.push(deviceSchedule);
     }
 
+    return allSchedules;
+}
+
+function solution_bruteforce(allSchedules: DeviceSchedule[][]): DeviceBatchSchedule {
     let scheduleOptimal: DeviceBatchSchedule = null;
     for (let schedule of new ScheduleIterator_BruteForce(allSchedules)) {
         if (schedule.isValid(input.maxPower) &&
@@ -62,9 +66,11 @@ function solution(input: it.Input): Output {
         schedule.hourStart += consts.HOUR_MODE_SHIFT;
     }
 
-    return scheduleOptimal.toOutput();
+    return scheduleOptimal;
 }
 
-const answer: Output = solution(input);
+const allSchedules = computeAllSchedules(input);
+
+const answer: Output = solution_bruteforce(allSchedules).toOutput();
 // console.log(answer);
 console.log(JSON.stringify(answer, null, 2));

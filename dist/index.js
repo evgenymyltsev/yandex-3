@@ -6,7 +6,7 @@ const DeviceSchedule_1 = require("./DeviceSchedule");
 const consts = require("./Constants");
 const ScheduleIterator_BruteForce_1 = require("./ScheduleIterator_BruteForce");
 const RatesAligner_1 = require("./RatesAligner");
-function solution(input) {
+function computeAllSchedules(input) {
     let ratesAligner = new RatesAligner_1.RatesAligner(Object.assign([], input.rates));
     const allSchedules = [];
     for (let device of input.devices) {
@@ -39,9 +39,12 @@ function solution(input) {
         }
         allSchedules.push(deviceSchedule);
     }
+    return allSchedules;
+}
+function solution_bruteforce(allSchedules) {
     let scheduleOptimal = null;
     for (let schedule of new ScheduleIterator_BruteForce_1.ScheduleIterator_BruteForce(allSchedules)) {
-        if (schedule.isValid(input.maxPower) &&
+        if (schedule.isValid(data_1.input.maxPower) &&
             (util_1.isNullOrUndefined(scheduleOptimal) || scheduleOptimal.totalConsumption > schedule.totalConsumption)) {
             scheduleOptimal = schedule;
         }
@@ -49,9 +52,10 @@ function solution(input) {
     for (let schedule of scheduleOptimal.devices) {
         schedule.hourStart += consts.HOUR_MODE_SHIFT;
     }
-    return scheduleOptimal.toOutput();
+    return scheduleOptimal;
 }
-const answer = solution(data_1.input);
+const allSchedules = computeAllSchedules(data_1.input);
+const answer = solution_bruteforce(allSchedules).toOutput();
 // console.log(answer);
 console.log(JSON.stringify(answer, null, 2));
 //# sourceMappingURL=index.js.map
