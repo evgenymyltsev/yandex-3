@@ -3,8 +3,14 @@ import {Output} from "./OutputData";
 import * as consts from './Constants';
 
 export class DeviceSchedule {
-    constructor(public device: it.Device, public totalRate: number,
-                public hourStart: number, public hourEnd: number) {}
+    constructor(public device: it.Device,
+                public totalRate: number,
+                public hourStart: number) {
+    }
+
+    public hourEnd() {
+        return this.hourStart + this.device.duration;
+    }
 }
 
 export class DeviceBatchSchedule {
@@ -18,7 +24,7 @@ export class DeviceBatchSchedule {
     public isValid(maxPower: number): boolean {
         let consumption =
             this.devices.map(d => [d.hourStart, d.device.power]);
-        consumption = consumption.concat(this.devices.map(d => [d.hourEnd, -d.device.power]));
+        consumption = consumption.concat(this.devices.map(d => [d.hourEnd(), -d.device.power]));
         consumption.sort((x, y) => x[0] - y[0]);
 
         let totalConsumption = 0;
@@ -47,7 +53,7 @@ export class DeviceBatchSchedule {
         for (let deviceSchedule of this.devices) {
             output.consumedEnergy.devices[deviceSchedule.device.id] = deviceSchedule.totalRate / 1000.;
 
-            for (let hour = deviceSchedule.hourStart; hour < deviceSchedule.hourEnd; hour++) {
+            for (let hour = deviceSchedule.hourStart; hour < deviceSchedule.hourEnd(); hour++) {
                 output.schedule[hour % consts.HOURS_PER_DAY].push(deviceSchedule.device.id);
             }
         }
