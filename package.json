@@ -1,7 +1,7 @@
 {
-  "name": "typescript-project-template",
+  "name": "yandex-3",
   "version": "1.0.0",
-  "description": " Simple typescript project template ",
+  "description": "Реализовать алгоритм работы умного дома",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -9,8 +9,7 @@
     "test": "jasmine ./.tmp/test/index.js",
     "start": "npm run build && node dist/index.js"
   },
-  "author": "Stefan Huber",
-  "license": "BSD-2-Clause",
+  "author": "Evgeny Myltsev",
   "devDependencies": {
     "@types/jasmine": "^2.8.6",
     "@types/node": "^9.4.6",
