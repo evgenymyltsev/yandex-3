@@ -1,13 +1,9 @@
-class Schedule {
-    hour: number;
-    deviceIds: string[];
+interface ConsumedEnergy {
+    value: number,
+    devices: { [id: string]: number }
 }
 
-class ConsumedEnergy {
-    value: number;
-}
-
-export class Output {
-    schedule: Schedule;
-    consumedEnergy: ConsumedEnergy;
+export interface Output {
+    schedule: { [hour: number]: string[] },
+    consumedEnergy: ConsumedEnergy,
 }

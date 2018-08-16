@@ -1,12 +1,12 @@
-interface Device {
-    id: String,
-    name: String,
+export interface Device {
+    id: string,
+    name: string,
     power: number,
     duration: number,
-    mode?: String,
+    mode?: string,
 }
 
-interface Rate {
+export interface Rate {
     from: number,
     to: number,
     value: number,
