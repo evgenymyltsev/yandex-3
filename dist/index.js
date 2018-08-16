@@ -75,10 +75,10 @@ class RatesAligner {
             rates[rateIdx].to += consts.HOURS_PER_DAY;
             rateIdx++;
         }
-        rates.map(r => {
+        for (let r of rates) {
             r.from -= consts.HOUR_MODE_SHIFT;
             r.to -= consts.HOUR_MODE_SHIFT;
-        });
+        }
         while (rates[0].to < 0 && rates[0].from < 0) {
             const rateHead = rates[0];
             rateHead.from += consts.HOURS_PER_DAY;
@@ -156,4 +156,4 @@ function solution(input) {
 const answer = solution(data_1.input);
 // console.log(answer);
 console.log(JSON.stringify(answer, null, 2));
-//# sourceMappingURL=Index.js.map
+//# sourceMappingURL=index.js.map

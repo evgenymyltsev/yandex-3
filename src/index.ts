@@ -94,10 +94,10 @@ class RatesAligner {
             rateIdx++;
         }
 
-        rates.map(r => {
+        for (let r of rates) {
             r.from -= consts.HOUR_MODE_SHIFT;
             r.to -= consts.HOUR_MODE_SHIFT;
-        });
+        }
 
         while (rates[0].to < 0 && rates[0].from < 0) {
             const rateHead = rates[0];
