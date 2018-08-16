@@ -4,8 +4,7 @@ import * as consts from './Constants';
 
 export class DeviceSchedule {
     constructor(public device: it.Device, public totalRate: number,
-                public hourStart: number, public hourEnd: number,
-                public hourOffset: number) {}
+                public hourStart: number, public hourEnd: number) {}
 }
 
 export class DeviceBatchSchedule {

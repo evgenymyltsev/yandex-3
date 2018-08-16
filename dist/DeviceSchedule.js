@@ -2,12 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const consts = require("./Constants");
 class DeviceSchedule {
-    constructor(device, totalRate, hourStart, hourEnd, hourOffset) {
+    constructor(device, totalRate, hourStart, hourEnd) {
         this.device = device;
         this.totalRate = totalRate;
         this.hourStart = hourStart;
         this.hourEnd = hourEnd;
-        this.hourOffset = hourOffset;
     }
 }
 exports.DeviceSchedule = DeviceSchedule;

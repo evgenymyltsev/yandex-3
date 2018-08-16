@@ -153,7 +153,7 @@ function solution(input: it.Input): Output {
             totalRate += ratesAligner.rates[rateIdxEnd].value * device.power;
         }
         const ds = new DeviceSchedule(device, totalRate,
-            deviceCurrentStartHour, deviceCurrentEndHour, 0);
+            deviceCurrentStartHour, deviceCurrentEndHour);
         deviceSchedule.push(ds);
 
         while (deviceCurrentEndHour < endHour) {
@@ -171,7 +171,7 @@ function solution(input: it.Input): Output {
             totalRate += ratesAligner.rates[rateIdxEnd].value * device.power;
 
             const ds = new DeviceSchedule(device, totalRate,
-                deviceCurrentStartHour, deviceCurrentEndHour, deviceCurrentStartHour - startHour);
+                deviceCurrentStartHour, deviceCurrentEndHour);
             deviceSchedule.push(ds);
         }
 

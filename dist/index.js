@@ -122,7 +122,7 @@ function solution(input) {
             }
             totalRate += ratesAligner.rates[rateIdxEnd].value * device.power;
         }
-        const ds = new DeviceSchedule_1.DeviceSchedule(device, totalRate, deviceCurrentStartHour, deviceCurrentEndHour, 0);
+        const ds = new DeviceSchedule_1.DeviceSchedule(device, totalRate, deviceCurrentStartHour, deviceCurrentEndHour);
         deviceSchedule.push(ds);
         while (deviceCurrentEndHour < endHour) {
             totalRate -= ratesAligner.rates[rateIdxStart].value * device.power;
@@ -135,7 +135,7 @@ function solution(input) {
                 rateIdxEnd++;
             }
             totalRate += ratesAligner.rates[rateIdxEnd].value * device.power;
-            const ds = new DeviceSchedule_1.DeviceSchedule(device, totalRate, deviceCurrentStartHour, deviceCurrentEndHour, deviceCurrentStartHour - startHour);
+            const ds = new DeviceSchedule_1.DeviceSchedule(device, totalRate, deviceCurrentStartHour, deviceCurrentEndHour);
             deviceSchedule.push(ds);
         }
         allSchedules.push(deviceSchedule);
