@@ -1,23 +1,10 @@
-# Typescript template
+Папка `dist` содержит скомпилированный проект. `dist/index.js` -- стартовый файл.
 
-## Files
+Исходный код находится в папке `src`. `src/index.ts` -- стартовый файл, в котором
+находится функция `solution(input: Input): Output`, находящая решение к поставленной
+задаче. Для запуска следует выполнить команды:
 
+```bash
+yarn install
+yarn start
 ```
-src/Index.ts     write programm code into this file (or import other files here)
-test/Index.ts    write tests or import tests here
-```
-
-## Commands
-
-```
-npm install      install all required node packages
-npm start        compile and run program
-npm test         compile and run jasmine tests
-```
-
-## Addional Features
-
-```
-Debugging configuration for vscode is supplied (.vscode/launch.json)
-```
-
