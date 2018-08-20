@@ -5,6 +5,7 @@ const util_1 = require("util");
 const DeviceSchedule_1 = require("./DeviceSchedule");
 const consts = require("./Constants");
 const ScheduleIterator_BruteForce_1 = require("./ScheduleIterator_BruteForce");
+const ScheduleIterator_1 = require("./ScheduleIterator");
 const RatesAligner_1 = require("./RatesAligner");
 function computeAllSchedules(input) {
     let ratesAligner = new RatesAligner_1.RatesAligner(Object.assign([], input.rates));
@@ -42,6 +43,8 @@ function computeAllSchedules(input) {
     return allSchedules;
 }
 function solution_bruteforce(allSchedules) {
+    const counter = Array.from(new ScheduleIterator_BruteForce_1.ScheduleIterator_BruteForce(allSchedules)).length;
+    console.log(counter);
     let scheduleOptimal = null;
     for (let schedule of new ScheduleIterator_BruteForce_1.ScheduleIterator_BruteForce(allSchedules)) {
         if (schedule.isValid(data_1.input.maxPower) &&
@@ -54,8 +57,31 @@ function solution_bruteforce(allSchedules) {
     }
     return scheduleOptimal;
 }
+function solution(allSchedules) {
+    let scheduleOptimal = null;
+    let iterator = new ScheduleIterator_1.ScheduleIterator(allSchedules);
+    for (let schedule of iterator) {
+        if (schedule.isValid(data_1.input.maxPower)) {
+            const isMinimum = util_1.isNullOrUndefined(scheduleOptimal) || scheduleOptimal.totalConsumption > schedule.totalConsumption;
+            if (isMinimum) {
+                scheduleOptimal = schedule;
+                break;
+            }
+        }
+    }
+    for (let schedule of scheduleOptimal.devices) {
+        schedule.hourStart += consts.HOUR_MODE_SHIFT;
+    }
+    return scheduleOptimal;
+}
 const allSchedules = computeAllSchedules(data_1.input);
-const answer = solution_bruteforce(allSchedules).toOutput();
-// console.log(answer);
-console.log(JSON.stringify(answer, null, 2));
+console.time("bruteforce");
+// const answer1: Output = solution_bruteforce(allSchedules).toOutput();
+console.timeEnd("bruteforce");
+// console.log(JSON.stringify(answer1, null, 2));
+console.time("optimal");
+const answer2 = solution(allSchedules).toOutput();
+console.timeEnd("optimal");
+// console.log(answer2);
+// console.log(JSON.stringify(answer2, null, 2));
 //# sourceMappingURL=index.js.map

@@ -5,6 +5,7 @@ import {isNullOrUndefined} from "util";
 import {DeviceSchedule, DeviceBatchSchedule} from './DeviceSchedule';
 import * as consts from './Constants';
 import {ScheduleIterator_BruteForce} from './ScheduleIterator_BruteForce';
+import {ScheduleIterator} from './ScheduleIterator';
 import {RatesAligner} from './RatesAligner';
 
 function computeAllSchedules(input: it.Input): DeviceSchedule[][] {
@@ -54,6 +55,9 @@ function computeAllSchedules(input: it.Input): DeviceSchedule[][] {
 }
 
 function solution_bruteforce(allSchedules: DeviceSchedule[][]): DeviceBatchSchedule {
+    const counter = Array.from(new ScheduleIterator_BruteForce(allSchedules)).length;
+    console.log(counter);
+
     let scheduleOptimal: DeviceBatchSchedule = null;
     for (let schedule of new ScheduleIterator_BruteForce(allSchedules)) {
         if (schedule.isValid(input.maxPower) &&
@@ -69,8 +73,37 @@ function solution_bruteforce(allSchedules: DeviceSchedule[][]): DeviceBatchSched
     return scheduleOptimal;
 }
 
+function solution(allSchedules: DeviceSchedule[][]): DeviceBatchSchedule {
+    let scheduleOptimal: DeviceBatchSchedule = null;
+
+    let iterator = new ScheduleIterator(allSchedules);
+    for (let schedule of iterator) {
+        if (schedule.isValid(input.maxPower)) {
+            const isMinimum =
+                isNullOrUndefined(scheduleOptimal) || scheduleOptimal.totalConsumption > schedule.totalConsumption;
+            if (isMinimum) {
+                scheduleOptimal = schedule;
+                break;
+            }
+        }
+    }
+
+    for (let schedule of scheduleOptimal.devices) {
+        schedule.hourStart += consts.HOUR_MODE_SHIFT;
+    }
+
+    return scheduleOptimal;
+}
+
 const allSchedules = computeAllSchedules(input);
 
-const answer: Output = solution_bruteforce(allSchedules).toOutput();
-// console.log(answer);
-console.log(JSON.stringify(answer, null, 2));
+console.time("bruteforce");
+// const answer1: Output = solution_bruteforce(allSchedules).toOutput();
+console.timeEnd("bruteforce");
+// console.log(JSON.stringify(answer1, null, 2));
+
+console.time("optimal");
+const answer2: Output = solution(allSchedules).toOutput();
+console.timeEnd("optimal");
+// console.log(answer2);
+// console.log(JSON.stringify(answer2, null, 2));
