@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc --target es6",
-    "pretest": "tsc --target es6 --outDir ./.tmp test/index.ts",
-    "test": "jasmine ./.tmp/test/index.js",
+    "pretest": "tsc --target es6 --outDir ./.tmp test/*.spec.ts",
+    "test": "jasmine --config=jasmine.json",
     "start": "npm run build && node dist/index.js"
   },
   "author": "Evgeny Myltsev",
