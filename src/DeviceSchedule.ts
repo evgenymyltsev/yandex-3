@@ -3,18 +3,31 @@ import {Output} from "./OutputData";
 import * as consts from './Constants';
 
 export class DeviceSchedule {
-    constructor(public device: it.Device,
-                public totalRate: number,
-                public hourStart: number) {
+    constructor(private _device: it.Device,
+                private _totalRate: number,
+                private _hourStart: number) {
     }
 
-    public hourEnd() {
-        return this.hourStart + this.device.duration;
+    get hourEnd() {
+        return this._hourStart + this._device.duration;
+    }
+
+    get device(): it.Device {
+        return this._device;
+    }
+
+    get totalRate(): number {
+        return this._totalRate;
+    }
+
+    get hourStart(): number {
+        return this._hourStart;
     }
 }
 
 export class DeviceBatchSchedule {
     public readonly totalConsumption: number;
+    public indices: number[];
 
     constructor(public devices: DeviceSchedule[]) {
         this.totalConsumption =
@@ -24,7 +37,7 @@ export class DeviceBatchSchedule {
     public isValid(maxPower: number): boolean {
         let consumption =
             this.devices.map(d => [d.hourStart, d.device.power]);
-        consumption = consumption.concat(this.devices.map(d => [d.hourEnd(), -d.device.power]));
+        consumption = consumption.concat(this.devices.map(d => [d.hourEnd, -d.device.power]));
         consumption.sort((x, y) => x[0] - y[0]);
 
         let totalConsumption = 0;
@@ -53,10 +66,12 @@ export class DeviceBatchSchedule {
         for (let deviceSchedule of this.devices) {
             output.consumedEnergy.devices[deviceSchedule.device.id] = deviceSchedule.totalRate / 1000.;
 
-            for (let hour = deviceSchedule.hourStart; hour < deviceSchedule.hourEnd(); hour++) {
-                output.schedule[hour % consts.HOURS_PER_DAY].push(deviceSchedule.device.id);
+            for (let hour = deviceSchedule.hourStart; hour < deviceSchedule.hourEnd; hour++) {
+                const hourValid = (hour + consts.HOUR_MODE_SHIFT) % consts.HOURS_PER_DAY;
+                output.schedule[hourValid].push(deviceSchedule.device.id);
             }
         }
+
         return output;
     }
 }

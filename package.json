@@ -2,12 +2,16 @@
   "name": "yandex-3",
   "version": "1.0.0",
   "description": "Реализовать алгоритм работы умного дома",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "scripts": {
-    "build": "tsc --target es6",
+    "clean": "rimraf dist",
+    "watch:build": "tsc --watch",
+    "watch:server": "nodemon './dist/src/index.js' --watch './dist'",
+    "watch": "npm-run-all clean --parallel watch:build watch:server --print-label",
+    "build": "tsc",
+    "start": "npm run build && node dist/src/index.js",
     "pretest": "tsc --target es6 --outDir ./.tmp test/*.spec.ts",
-    "test": "jasmine --config=jasmine.json",
-    "start": "npm run build && node dist/index.js"
+    "test": "jasmine --config=jasmine.json"
   },
   "author": "Evgeny Myltsev",
   "devDependencies": {
@@ -19,6 +23,8 @@
   "dependencies": {
     "@types/lodash": "^4.14.116",
     "lodash": "^4.17.10",
-    "typescript-collections": "^1.3.2"
+    "nodemon": "^1.18.4",
+    "npm-run-all": "^4.1.3",
+    "rimraf": "^2.6.2"
   }
 }

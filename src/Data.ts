@@ -1,7 +1,7 @@
 import {Output} from "./OutputData";
 import {Input} from "./InputData";
 
-export let input: Input = {
+export const input: Input = {
     "devices": [
         {
             "id": "F972B82BA56A70CC579945773B6866FB",
@@ -66,7 +66,7 @@ export let input: Input = {
     "maxPower": 2100
 };
 
-export let output: Output = {
+export const output: Output = {
     "schedule": {
         "0": ["02DDD23A85DADDD71198305330CC386D", "1E6276CC231716FE8EE8BC908486D41E", "F972B82BA56A70CC579945773B6866FB"],
         "1": ["02DDD23A85DADDD71198305330CC386D", "1E6276CC231716FE8EE8BC908486D41E", "F972B82BA56A70CC579945773B6866FB"],

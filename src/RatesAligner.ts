@@ -2,10 +2,14 @@ import * as it from "./InputData";
 import * as consts from "./Constants";
 
 export class RatesAligner {
-    public dayModeRateStartIdx: number = 0;
-    public nightModeRateStartIdx: number = 0;
-    private nightModeHour = 21 - 7;
-    public readonly rateEdges: number[] = [];
+    private readonly dayModeRateStartIdx: number = 0;
+    private readonly nightModeRateStartIdx: number = 0;
+    private readonly nightModeHour = 21 - 7;
+    private readonly _rateEdges: number[] = [];
+
+    get rateEdges(): number[] {
+        return this._rateEdges;
+    }
 
     constructor(public rates: it.Rate[]) {
         this.alignRates();
@@ -16,7 +20,7 @@ export class RatesAligner {
         }
 
         for (let r of this.rates) {
-            this.rateEdges.push(r.to);
+            this._rateEdges.push(r.to);
         }
     }
 
